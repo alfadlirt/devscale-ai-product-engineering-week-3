@@ -1,0 +1,84 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model CuriculumVitae {
+  id          Int      @id @default(autoincrement())
+  key         String   @unique
+  content     String?  @db.Text
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model JobAnalyzerResult {
+  id                Int      @id @default(autoincrement())
+  curiculumVitaeId  Int
+  jobPostingUrl     String   @db.Text
+  companyName       String?  @db.Text
+  position          String?  @db.Text
+  salary            String?  @db.Text
+  description       String?  @db.Text
+  location          String?  @db.Text
+  type              JobType?
+
+  expectedMinimumUSDAnnualSalary Int? @default(0)
+  expectedLocation            String? @db.Text
+  expectedType               String?  @db.Text
+
+  requirementMatch    Float    @default(0.0)
+  experienceMatch     Float    @default(0.0)
+  educationMatch      Float    @default(0.0)
+  salaryExpectationMatch Float    @default(0.0)
+  skillsMatch         Float    @default(0.0)
+  certificationsMatch Float    @default(0.0)
+  languagesMatch      Float    @default(0.0)
+
+  confidence          Float    @default(0.0)
+  suggestedAction     SuggestionAction?
+  note                String?  @db.Text
+
+
+  coverLetter         String?  @db.Text
+
+  status              JobAnalyzerResultStatus @default(PENDING)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@unique([curiculumVitaeId, jobPostingUrl])
+}
+
+enum JobType {
+  REMOTE_FULL_TIME
+  REMOTE_PART_TIME
+  ON_SITE_FULL_TIME
+  ON_SITE_PART_TIME
+  HYBRID_FULL_TIME
+  HYBRID_PART_TIME
+  CONTRACT_FULL_TIME
+  CONTRACT_PART_TIME
+}
+
+enum JobAnalyzerResultStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+enum SuggestionAction {
+  STRONG_APPLY
+  APPLY
+  STRETCH
+  UNLIKELY
+  SKIP
+}

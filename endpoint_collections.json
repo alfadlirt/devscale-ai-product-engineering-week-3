@@ -1,0 +1,126 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Job Intel",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/curiculum-vitae": {
+      "get": {
+        "summary": "Get CV",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
+        "operationId": "Get_CV"
+      },
+      "post": {
+        "summary": "Upload CV",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
+        "operationId": "Upload_CV",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "type": "string",
+                    "example": "cv-1"
+                  },
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/job-analyzer": {
+      "get": {
+        "summary": "Get Job Analyze",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
+        "operationId": "Get_Job_Analyze"
+      }
+    },
+    "/job-analyzer/by-job-posting": {
+      "post": {
+        "summary": "Analyze Job Posting",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
+        "operationId": "Analyze_Job_Posting",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "jobPostingUrls": [
+                  "https://remoteok.com/remote-jobs/remote-senior-ai-engineer-architect-lemon-io-1134396",
+                  "https://remoteok.com/remote-jobs/remote-senior-software-engineer-stellar-ai-1128869"
+                ],
+                "cvId": 1,
+                "userContext": {
+                  "preferences": {
+                    "minimumAnnualSalaryUSD": 100000,
+                    "targetAnnualSalaryUSD": {
+                      "min": 100000,
+                      "max": 150000
+                    },
+                    "preferredLocations": [
+                      "Singapore",
+                      "Australia",
+                      "Malaysia",
+                      "Dubai"
+                    ],
+                    "expectedEmploymentTypes": [
+                      "REMOTE_FULL_TIME",
+                      "REMOTE_PART_TIME"
+                    ],
+                    "preferredTimezone": "GMT+7"
+                  },
+                  "careerGoals": [
+                    "Become a Fullstack AI Engineer building impactful AI products.",
+                    "Work on modern AI technologies and keep up with industry trends.",
+                    "Find a remote-first company with flexible working hours.",
+                    "Leave contract outsourcing roles of Indonesian system in favor of long-term career growth. But it still considerable if contract but with expected salary in usd, i avoid contract in Indonesia",
+                    "Achieve financial freedom while maintaining a healthy work-life balance.",
+                    "Prioritize opportunities in Singapore, while considering countries with overlapping working hours with Jakarta.",
+                    "Earn between USD 100,000 and USD 150,000 annually.",
+                    "Increase income to prepare for future family and marriage."
+                  ],
+                  "strengths": [
+                    "Strong problem-solving skills.",
+                    "Fast learner.",
+                    "Visual thinker.",
+                    "Clear communicator.",
+                    "Able to quickly adapt to unfamiliar technologies."
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000"
+    }
+  ]
+}
